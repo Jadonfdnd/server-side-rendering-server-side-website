@@ -6,16 +6,16 @@ import express from 'express'
 import { Liquid } from 'liquidjs';
 
 
-console.log('Hieronder moet je waarschijnlijk nog wat veranderen')
+console.log('yuppie')
 // Doe een fetch naar de data die je nodig hebt
-// const apiResponse = await fetch('...')
+const apiResponse = await fetch('https://fdnd-agency.directus.app/items/adconnect_news')
 
 // Lees van de response van die fetch het JSON object in, waar we iets mee kunnen doen
-// const apiResponseJSON = await apiResponse.json()
+const apiResponseJSON = await apiResponse.json()
 
 // Controleer eventueel de data in je console
 // (Let op: dit is _niet_ de console van je browser, maar van NodeJS, in je terminal)
-// console.log(apiResponseJSON)
+console.log(apiResponseJSON)
 
 
 // Maak een nieuwe Express applicatie aan, waarin we de server configureren
@@ -40,7 +40,63 @@ app.set('views', './views')
 app.get('/', async function (request, response) {
    // Render index.liquid uit de Views map
    // Geef hier eventueel data aan mee
+
+
+
+
+   const news = [
+      {
+        title: "Landelijke Ad-dag",
+        summary: "dit is dummy content"
+      },
+      {
+        title: "Workshops & netwerken",
+        summary: "dit is dummy content"
+      },
+      {
+        title: "Ad Talent Award",
+        summary: "dit is dummy content."
+      }
+   ]
    response.render('index.liquid')
+})
+
+//error handling 
+
+app.use((req, res, next) => {
+  res.status(404).render('error.liquid', {
+    statusCode: 404,
+    message: "Sorry, we can't find that page!"
+  })
+})
+//route voor genomineerde studenten pagina
+app.get('/genomineerden', async function (request, response) {
+
+  // Maak een array met genomineerde studenten
+  // Elke student heeft een naam, school en afbeelding
+  const nominees = [
+    {
+      name: "Thijs Kiens",
+      school: "Avans Academie Associate degrees",
+    },
+    {
+      name: "Vera Driessen",
+      school: "Fontys",
+    },
+    {
+      name: "Josien te Winkel",
+      school: "Grenslandcollege",
+    },
+    {
+      name: "Rick Snijder",
+      school: "Hanze",
+    },
+  
+  ]
+
+  // Render de Liquid view 'genomineerden.liquid'
+  // en geef de dummy data (nominees) mee aan de template
+  response.render('genomineerden.liquid', { nominees: nominees })
 })
 
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
