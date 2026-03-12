@@ -61,6 +61,10 @@ app.get('/', async function (request, response) {
    response.render('index.liquid')
 })
 
+// lados page
+app.get('/lado', async function (req, res) {
+  res.render('lado.liquid')
+})
 //error handling 
 
 app.use((req, res, next) => {
